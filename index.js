@@ -1,7 +1,9 @@
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
+const cors = require('cors')
 
+app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
 app.use(morgan(function (tokens, req, res) {
@@ -52,9 +54,6 @@ const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-app.get('/', (req, res) => {
-    res.send('<h1>Hello World!</h1>')
-})
 
 app.get('/info', (req, res) => {
     res.send(`Phonebook has info for ${persons.length} people.<p>${new Date()}`)

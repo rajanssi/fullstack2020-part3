@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const mongoose = require('mongoose')
 
 if (process.argv.length<3) {
@@ -12,30 +13,30 @@ const url = `mongodb+srv://fullstack:${password}@cluster0.bx8xk.mongodb.net/test
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 const perosnSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+  name: String,
+  number: String,
 })
 
 const Person = mongoose.model('Person', perosnSchema)
 
-if (process.argv.length == 3){
+if (process.argv.length === 3){
   Person
     .find({})
-    .then(persons =>{
+    .then(persons => {
       console.log('phonebook:')
       persons.forEach(person => console.log(person.name, person.number))
       mongoose.connection.close()
     })
-} else if (process.argv.length == 5){
+} else if (process.argv.length === 5){
   const name = process.argv[3]
   const number = process.argv[4]
-  const person = new Person({name: name, number: number})
+  const person = new Person({ name: name, number: number })
 
-  person.save().then(response => {
+  person.save().then(() => {
     console.log(`added ${name} number ${number} to phonebook`)
     mongoose.connection.close()
   })
 } else {
-  console.log(`muissa tapauksissa`)
+  console.log('muissa tapauksissa')
   mongoose.connection.close()
 }
